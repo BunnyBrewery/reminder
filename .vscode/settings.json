@@ -1,0 +1,30 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+
+    "editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+
+  "markdownlint.config": {
+    "MD022": false,
+    "MD025": false,
+    "MD026": false,
+    "MD019": false
+  },
+  //   "editor.detectIndentation": false,
+  //   "editor.formatOnPaste": true,
+  //   "editor.formatOnSave": true,
+
+  "window.zoomLevel": 0
+  // "editor.rulers": [
+  //     88,
+  //     120
+  // ],
+  //   "workbench.colorCustomizations": {
+  //     "editorRuler.foreground": "#d400ff"
+  //   }
+}
