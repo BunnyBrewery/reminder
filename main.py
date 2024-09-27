@@ -1,50 +1,39 @@
 """
-This module provides a basic sequence for making a call with a user
+API Endpoints to support action and memory of reminder app
+
+You can run it using `uvicorn main:app --reload`
+
+You can reach these API endpoints using http://211.216.235.50:30000/
+3000 is mapped to 8000 (internally)
 """
 
-import requests
-from dotenv import load_dotenv
-import os
-from typing import Dict, Any, Tuple
-from bland_ai_wrapper import BlandAIWrapper
+from fastapi import FastAPI
+
+import httpx
+import asyncio
+
+app = FastAPI()
 
 
-def load_env() -> Tuple[str, str, str]:
-    load_dotenv()
-
-    api_key = os.getenv("API_KEY")
-    pathway_id = os.getenv("PATHWAY_ID")
-    target_number = os.getenv("TARGET_PHONE_NUMBER")
-
-    if api_key is None:
-        raise ValueError("API_KEY environment variable is not set.")
-    if pathway_id is None:
-        raise ValueError("PATHWAY_ID environment variable is not set.")
-    if target_number is None:
-        raise ValueError("TARGET_PHONE_NUMBER environment variable is not set.")
-
-    return api_key, pathway_id, target_number
+@app.get("/")
+def read_root():
+    return {"message": "Hello, FastAPI!"}
 
 
-def main() -> None:
-    api_key, pathway_id, target_number = load_env()
-    task = (
-        "Your name is Javis. You are here to help manage reminders and todo for the person. Listen to what they want to be reminded of, and confirm that you will remind them later for their request.",
-    )
-    bland_ai: BlandAIWrapper = BlandAIWrapper(api_key)
-    response: Dict[str, Any] = bland_ai.call_with_pathway(
-        phone_number=target_number, task=task[0], pathway_id=pathway_id
-    )
-    print(response)
-    if response["status"] == "error":
-        exit()
-
-    call_id = response["call_id"]
-    print(call_id)
-
-    # end_call = bland_ai.end_call(call_id=call_id)
-    # print(end_call)
+# Define a dynamic path endpoint
+@app.get("/items/{item_id}")
+async def read_item(item_id: int, q: str | None = None):
+    await asyncio.sleep(5)
+    return {"item_id": item_id, "query": q}
 
 
-if __name__ == "__main__":
-    main()
+# New endpoint that makes an asynchronous external API call
+@app.get("/external-data")
+async def get_external_data():
+    async with httpx.AsyncClient() as client:
+        # Asynchronous GET request to external API
+        response = await client.get("https://api.example.com/data")
+
+    # Process and return the response from the external API
+    data = response.json()
+    return {"external_data": data}
