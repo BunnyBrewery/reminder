@@ -9,35 +9,10 @@ You can reach these API endpoints using http://211.216.235.50:30000/
 
 from fastapi import FastAPI, HTTPException
 import httpx
-from typing import List, Dict
-from pydantic import BaseModel
 import asyncio
 from mem0 import MemoryClient  # type: ignore
-import json
-
-
-class Message(BaseModel):
-    role: str
-    content: str
-
-
-# class Message(BaseModel):
-#     data: Dict[str, str]
-
-
-class Messages(BaseModel):
-    all: List[Message]
-
-
-class StorePromptsResponse(BaseModel):
-    status: str
-    message: str
-    data: dict
-
-
-# class ErrorResponse(BaseModel):
-#     status: str
-#     message: str
+from typing import List
+from models import Message, StorePromptsResponse, ReminderRegisterRequest
 
 
 MEM0_API = "m0-g8dVJshuubNC8Vh3u3WF8kca5Ikkpy1D0vOfqkYj"
@@ -52,7 +27,7 @@ def read_root():
     return {"message": "Hello, FastAPI!"}
 
 
-@app.post("/store_prompts")
+@app.post("/store-prompts")
 async def store_prompts(prompts: List[Message]):
     """
     Accepts a prompt and stores it in an external vector database via an API call.
@@ -72,6 +47,13 @@ async def store_prompts(prompts: List[Message]):
         raise HTTPException(status_code=500, detail="Failed to store prompts.") from e
 
 
+@app.post("/register-reminder")
+async def register_reminder(req: ReminderRegisterRequest):
+    # print(req)
+    request = req.model_dump()
+    print(request)
+
+
 @app.get("/items/{item_id}")
 async def read_item(item_id: int, q: str | None = None):
     await asyncio.sleep(5)
@@ -82,6 +64,5 @@ async def read_item(item_id: int, q: str | None = None):
 async def get_external_data():
     async with httpx.AsyncClient() as client:
         response = await client.get("https://api.example.com/data")
-
     data = response.json()
     return {"external_data": data}

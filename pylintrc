@@ -209,7 +209,6 @@ no-docstring-rgx=(__.*__|main|test.*|.*test|.*Test)$
 # ones are exempt.
 docstring-min-length=12
 
-
 [TYPECHECK]
 
 # List of decorators that produce context managers, such as
@@ -232,7 +231,6 @@ ignored-classes=optparse.Values,thread._local,_thread._local
 # system, and so shouldn't trigger E1101 when accessed. Python regular
 # expressions are accepted.
 generated-members=
-
 
 [FORMAT]
 
