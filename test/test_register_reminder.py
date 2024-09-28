@@ -3,7 +3,7 @@ Testing register_reminder endpoint
 """
 
 from fastapi.testclient import TestClient
-from main import app
+from app.main import app
 import pytest  # type: ignore
 
 client = TestClient(app)

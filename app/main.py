@@ -1,7 +1,7 @@
 """
 API Endpoints to support action and memory of reminder app
 
-You can run it using `uvicorn main:app --reload --host 0.0.0.0 --port 8000  `
+You can run it using `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
 
 You can reach these API endpoints using http://211.216.235.50:30000/
 3000 is mapped to 8000 (internally)
@@ -12,7 +12,7 @@ import httpx
 import asyncio
 from mem0 import MemoryClient  # type: ignore
 from typing import List
-from models import Message, StorePromptsResponse, ReminderRegisterRequest
+from app.models import Message, StorePromptsResponse, ReminderRegisterRequest
 
 
 MEM0_API = "m0-g8dVJshuubNC8Vh3u3WF8kca5Ikkpy1D0vOfqkYj"
