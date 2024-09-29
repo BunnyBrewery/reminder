@@ -13,13 +13,24 @@ import asyncio
 from mem0 import MemoryClient  # type: ignore
 from typing import List
 from app.models import Message, StorePromptsResponse, ReminderRegisterRequest
+from app.db.database import connect_to_db, close_db_connection
+from contextlib import asynccontextmanager
+
+
+app = FastAPI()
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):  # pylint: disable=redefined-outer-name
+    app.state.db = await connect_to_db()
+    yield
+    await close_db_connection(app.state.db)
 
 
 MEM0_API = "m0-g8dVJshuubNC8Vh3u3WF8kca5Ikkpy1D0vOfqkYj"
 MEM0_USER = "hansu"
 
 mem0_client = MemoryClient(api_key=MEM0_API)
-app = FastAPI()
 
 
 @app.get("/")
