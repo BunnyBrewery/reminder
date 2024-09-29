@@ -14,13 +14,13 @@ def test_client():
     return TestClient(app)
 
 
-def test_read_root(test_client):
+def test_read_root(test_client):  # pylint: disable=redefined-outer-name
     response = test_client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Hello, FastAPI!"}
 
 
-def test_store_prompts(test_client):
+def test_store_prompts(test_client):  # pylint: disable=redefined-outer-name
     data = [
         {"role": "user", "content": "I like to walk."},
         {"role": "user", "content": "I run nearly every day."},
@@ -30,7 +30,7 @@ def test_store_prompts(test_client):
     assert response.json()["status"] == "success"
 
 
-def test_register_reminder(test_client):
+def test_register_reminder(test_client):  # pylint: disable=redefined-outer-name
     reminder_data = {
         "type": "daily",
         "time_at_request_utc": "2024-09-28T12:00:00Z",
@@ -40,6 +40,6 @@ def test_register_reminder(test_client):
         "todo_message": "Water the plants",
     }
     response = test_client.post("/register-reminder", json=reminder_data)
-    assert isinstance(response) is not type(None)
+    # assert isinstance(response) is not type(None)
     assert response.status_code == 200
     assert "type" in response.json()
