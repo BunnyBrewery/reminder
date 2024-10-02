@@ -12,7 +12,12 @@ import httpx
 import asyncio
 from mem0 import MemoryClient  # type: ignore
 from typing import List
-from app.models import Message, StorePromptsResponse, ReminderRegisterRequest
+from app.models import (
+    Message,
+    StorePromptsResponse,
+    ReminderRegisterRequest,
+    ReminderResponse,
+)
 from app.db.database import connect_to_db, close_db_connection
 from contextlib import asynccontextmanager
 
@@ -59,10 +64,10 @@ async def store_prompts(prompts: List[Message]):
 
 
 @app.post("/register-reminder")
-async def register_reminder(req: ReminderRegisterRequest):
-    # print(req)
+async def register_reminder(req: ReminderRegisterRequest) -> ReminderResponse:
     request = req.model_dump()
     print(request)
+    return ReminderResponse(status="success", message="registered")
 
 
 @app.get("/items/{item_id}")

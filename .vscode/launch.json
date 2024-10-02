@@ -9,7 +9,14 @@
       "type": "debugpy",
       "request": "launch",
       "module": "uvicorn",
-      "args": ["main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"],
+      "args": [
+        "app.main:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ],
       "jinja": true,
       "env": {},
       "console": "integratedTerminal"
@@ -18,7 +25,7 @@
       "name": "Python Debugger: Single File",
       "type": "debugpy",
       "request": "launch",
-      "program": "${file}", // This runs the current open Python file.
+      "program": "${file}",
       "console": "integratedTerminal"
     }
   ]

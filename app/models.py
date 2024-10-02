@@ -12,12 +12,20 @@ class Message(BaseModel):
 
 
 class ReminderRegisterRequest(BaseModel):
-    type: str
+    reminder_repetition_type: str
+    days: List[str]
+    reminder_type: str
     time_at_request_utc: str
+    relative_time: bool
     time_after_minutes: int
     time_after_hours: int
-    cycle: str
+    absolute_time: bool
     todo_message: str
+
+
+class ReminderResponse(BaseModel):
+    status: str
+    message: str
 
 
 class Messages(BaseModel):
