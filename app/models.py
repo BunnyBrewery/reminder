@@ -23,6 +23,18 @@ class ReminderRegisterRequest(BaseModel):
     todo_message: str
 
 
+class RegisterUserRequest(BaseModel):
+    first_name: str
+    last_name: str
+    country_code_iso_3166: str
+    time_zone: str
+
+
+class GeneralResponse(BaseModel):
+    status: str
+    message: str
+
+
 class ReminderResponse(BaseModel):
     status: str
     message: str

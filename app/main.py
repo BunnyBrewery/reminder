@@ -17,8 +17,10 @@ from app.models import (
     StorePromptsResponse,
     ReminderRegisterRequest,
     ReminderResponse,
+    RegisterUserRequest,
+    GeneralResponse,
 )
-from app.db.database import connect_to_db, close_db_connection
+from app.db.database import connect_to_db, close_db_connection, db
 from contextlib import asynccontextmanager
 
 
@@ -68,6 +70,34 @@ async def register_reminder(req: ReminderRegisterRequest) -> ReminderResponse:
     request = req.model_dump()
     print(request)
     return ReminderResponse(status="success", message="registered")
+
+
+@app.post("/register_user")
+async def register_user(req: RegisterUserRequest) -> GeneralResponse:
+    query = """
+        INSERT INTO users (first_name, last_name, country_iso_3166, timezone) 
+        VALUES ($1, $2, $3, $4)
+    """
+    try:
+        await db.connect()
+        await db.execute(
+            query,
+            req.first_name,
+            req.last_name,
+            req.country_code_iso_3166,
+            req.time_zone,
+        )
+        delete_query = """
+            DELETE FROM users WHERE first_name = $1;
+        """
+        await db.execute(delete_query, req.first_name)
+        return GeneralResponse(
+            status="success", message="User registered successfully."
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to register user: {e}"
+        ) from e
 
 
 @app.get("/items/{item_id}")

@@ -58,3 +58,21 @@ def test_register_reminder(test_client):  # pylint: disable=redefined-outer-name
     print("response", response)
     # assert response.status_code == 200
     # assert "reminder_repetition_type" in response.json()
+
+
+def test_register_user():
+    response = client.post(
+        "/register_user",
+        json={
+            "first_name": "dummy",
+            "last_name": "dum",
+            "country_code_iso_3166": "US",
+            "time_zone": "PDT",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "status": "success",
+        "message": "User registered successfully.",
+    }
