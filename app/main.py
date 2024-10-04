@@ -3,6 +3,9 @@ API Endpoints to support action and memory of reminder app
 
 You can run it using `uvicorn app.main:app --reload --host 0.0.0.0 --port 8000`
 
+Poetry:
+    poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
 You can reach these API endpoints using http://211.216.235.50:30000/
 3000 is mapped to 8000 (internally)
 """

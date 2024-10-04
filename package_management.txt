@@ -1,0 +1,36 @@
+
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+http://211.216.235.50:30000/
+
+Dependencies:
+1)  pip freeze > requirements.txt
+2)  conda env export --no-builds > environment.yml 
+
+
+Poetry
+
+- poetry env use python
+- poetry install
+- poetry shell
+- poetry run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+
+Nginx (Mac)
+- brew services start nginx
+- brew services info nginx
+To reload after configuration chage
+- nginx -s reload 
+
+- openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/selfsigned.key -out /etc/ssl/certs/selfsigned.crt
+- sudo chmod 600 /etc/ssl/private/selfsigned.key 
+- sudo chmod 644 /etc/ssl/certs/selfsigned.crt 
+
+- nginx -t
+nginx: the configuration file /opt/homebrew/etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /opt/homebrew/etc/nginx/nginx.conf test is successful
+
+- tail -f /opt/homebrew/var/log/nginx/error.log
+- tail -f /opt/homebrew/var/log/nginx/access.log
+
+Check if ssl works correctly with nginx
+- openssl s_client -connect 211.216.235.50:8443 -servername 192.168.0.11
