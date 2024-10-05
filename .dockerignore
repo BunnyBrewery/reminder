@@ -1,0 +1,27 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+
+# Git and version control files
+.git/
+.gitignore
+
+# Docker files
+.dockerignore
+Dockerfile
+
+# Environment and configuration files
+*.env
+
+# Build artifacts
+build/
+dist/
+
+# Other editor or OS-specific files
+*.swp
+.DS_Store
